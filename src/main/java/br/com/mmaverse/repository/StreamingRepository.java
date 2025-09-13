@@ -1,4 +1,7 @@
 package br.com.mmaverse.repository;
 
-public interface StreamingRepository {
+import br.com.mmaverse.entity.Streaming;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface StreamingRepository extends JpaRepository<Streaming, Long> {
 }
