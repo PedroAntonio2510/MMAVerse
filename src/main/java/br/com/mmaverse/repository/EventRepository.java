@@ -1,4 +1,7 @@
 package br.com.mmaverse.repository;
 
-public interface EventRepository {
+import br.com.mmaverse.entity.Event;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface EventRepository extends JpaRepository<Event, Long> {
 }
