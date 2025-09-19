@@ -1,6 +1,7 @@
 package br.com.mmaverse.service;
 
 import br.com.mmaverse.entity.Organization;
+import br.com.mmaverse.entity.Streaming;
 import br.com.mmaverse.repository.OrganizationRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,18 @@ public class OrganizationService {
 
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    public Optional<Organization> update(Long id, Organization updateOrganization) {
+        Optional<Organization> optOrganization = repository.findById(id);
+        if (optOrganization.isPresent()) {
+            Organization organization = optOrganization.get();
+            organization.setName(updateOrganization.getName());
+            organization.setCnpj(updateOrganization.getCnpj());
+            repository.save(organization);
+
+            return Optional.of(organization);
+        }
+        return Optional.empty();
     }
 }

@@ -4,6 +4,7 @@ import br.com.mmaverse.dto.OrganizationDTO;
 import br.com.mmaverse.entity.Organization;
 import br.com.mmaverse.mapper.OrganizationMapper;
 import br.com.mmaverse.service.OrganizationService;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,13 @@ public class OrganizationController {
     public ResponseEntity<Organization> save(@RequestBody OrganizationDTO request) {
         Organization savedOrganization = organizationService.save(OrganizationMapper.toOrganization(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(savedOrganization);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Organization> update(@PathVariable Long id, @RequestBody OrganizationDTO request) {
+        return organizationService.update(id, OrganizationMapper.toOrganization(request))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")
