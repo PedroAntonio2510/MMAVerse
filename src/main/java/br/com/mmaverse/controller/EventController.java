@@ -31,6 +31,14 @@ public class EventController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedEvent);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Event> update(@PathVariable Long id,
+                                        @RequestBody EventDTO request) {
+        return eventService.update(id, EventMapper.toEntity(request))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Event> findById(@PathVariable Long id) {
         return eventService.findById(id)

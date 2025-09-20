@@ -41,6 +41,25 @@ public class EventService {
         repository.deleteById(id);
     }
 
+    public Optional<Event> update(Long id, Event updateEvent) {
+        Optional<Event> optEvent = repository.findById(id);
+        if (optEvent.isPresent()) {
+            List<Streaming> streamings = findStreamings(updateEvent.getStreaming());
+            Organization organization = findOrganization(updateEvent.getOrganization().getId());
+
+            Event event = optEvent.get();
+            event.setName(updateEvent.getName());
+            event.setLocation(updateEvent.getLocation());
+            event.setStartDate(updateEvent.getStartDate());
+            event.setStreaming(streamings);
+            event.setOrganization(organization);
+
+            repository.save(event);
+            return Optional.of(event);
+        }
+        return Optional.empty();
+    }
+
     public List<Streaming> findStreamings(List<Streaming> streamings) {
         List<Streaming> streamingsFound = new ArrayList<>();
         streamings.forEach(streaming -> streamingService.findById(streaming.getId())
