@@ -46,11 +46,11 @@ public class Contender {
     @Column(nullable = false)
     private Integer reach;
 
-    private Integer win;
+    private int win;
 
-    private Integer lose;
+    private int lose;
 
-    private Integer draw;
+    private int draw;
 
     @ManyToMany
     @JoinTable(name = "contender_gym",
