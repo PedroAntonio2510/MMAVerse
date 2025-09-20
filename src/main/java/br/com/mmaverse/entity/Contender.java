@@ -1,5 +1,6 @@
 package br.com.mmaverse.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -29,7 +30,7 @@ public class Contender {
     @Column(name = "nickname", length = 50, nullable = false)
     private String nickname;
 
-    @Column(length = 11, nullable = false)
+    @Column(length = 11, nullable = false, unique = true)
     private String cpf;
 
     @Column(name = "date_of_birth", nullable = false)
@@ -41,10 +42,10 @@ public class Contender {
     private String weightClass;
 
     @Column(nullable = false)
-    private Integer height;
+    private Double height;
 
     @Column(nullable = false)
-    private Integer reach;
+    private Double reach;
 
     private int win;
 
@@ -52,6 +53,7 @@ public class Contender {
 
     private int draw;
 
+    @JsonBackReference
     @ManyToMany
     @JoinTable(name = "contender_gym",
             joinColumns = @JoinColumn(name = "contender_id"),
