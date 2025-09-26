@@ -33,7 +33,7 @@ public class Fighting {
     private Contender contenderBlueCorner;
 
     @ManyToOne
-    @JoinColumn(name = "contender_winner_id")
+    @JoinColumn(name = "contender_winner")
     private Contender winner;
 
     @Column(name = "method_of_victory", length = 50)
