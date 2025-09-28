@@ -4,6 +4,7 @@ import br.com.mmaverse.dto.GymDTO;
 import br.com.mmaverse.entity.Gym;
 import br.com.mmaverse.mapper.GymMapper;
 import br.com.mmaverse.service.GymService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +27,13 @@ public class GymController {
     }
 
     @PostMapping
-    public ResponseEntity<Gym> save(@RequestBody GymDTO Gym) {
+    public ResponseEntity<Gym> save(@RequestBody @Valid GymDTO Gym) {
         Gym savedGym = gymService.save(GymMapper.toGym(Gym));
         return ResponseEntity.status(HttpStatus.CREATED).body(savedGym);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Gym> update(@PathVariable Long id, @RequestBody GymDTO request) {
+    public ResponseEntity<Gym> update(@PathVariable Long id, @RequestBody @Valid GymDTO request) {
         return gymService.update(id, GymMapper.toGym(request))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

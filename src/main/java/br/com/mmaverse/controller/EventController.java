@@ -4,6 +4,7 @@ import br.com.mmaverse.dto.EventDTO;
 import br.com.mmaverse.entity.Event;
 import br.com.mmaverse.mapper.EventMapper;
 import br.com.mmaverse.service.EventService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,14 +27,14 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<Event> save(@RequestBody EventDTO event) {
+    public ResponseEntity<Event> save(@RequestBody @Valid EventDTO event) {
         Event savedEvent = eventService.save(EventMapper.toEntity(event));
         return ResponseEntity.status(HttpStatus.CREATED).body(savedEvent);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Event> update(@PathVariable Long id,
-                                        @RequestBody EventDTO request) {
+                                        @RequestBody @Valid EventDTO request) {
         return eventService.update(id, EventMapper.toEntity(request))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

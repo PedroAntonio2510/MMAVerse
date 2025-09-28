@@ -5,7 +5,7 @@ import br.com.mmaverse.dto.FightingResponseDTO;
 import br.com.mmaverse.entity.Fighting;
 import br.com.mmaverse.mapper.FightingMapper;
 import br.com.mmaverse.service.FightingService;
-import org.apache.coyote.Response;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ public class FightingController {
     }
 
     @PostMapping
-    public ResponseEntity<FightingResponseDTO> save(@RequestBody FightingDTO request) {
+    public ResponseEntity<FightingResponseDTO> save(@RequestBody @Valid FightingDTO request) {
         Fighting savedFighting = fightingService.save(FightingMapper.toFighting(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(FightingMapper.toResponse(savedFighting ));
     }
@@ -35,7 +35,7 @@ public class FightingController {
 
     @PutMapping("/{id}")
     public ResponseEntity<FightingResponseDTO> update(@PathVariable Long id,
-                                                @RequestBody FightingDTO request) {
+                                                @RequestBody @Valid FightingDTO request) {
         return fightingService.update(id, FightingMapper.toFighting(request))
                 .map(fighting -> ResponseEntity.ok(FightingMapper.toResponse(fighting)))
                 .orElse(ResponseEntity.notFound().build());

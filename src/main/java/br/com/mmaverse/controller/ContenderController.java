@@ -5,6 +5,7 @@ import br.com.mmaverse.dto.ContenderResponseDTO;
 import br.com.mmaverse.entity.Contender;
 import br.com.mmaverse.mapper.ContenderMapper;
 import br.com.mmaverse.service.ContenderService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ContenderController {
     }
 
     @PostMapping
-    public ResponseEntity<ContenderResponseDTO> save(@RequestBody ContenderDTO request) {
+    public ResponseEntity<ContenderResponseDTO> save(@RequestBody @Valid ContenderDTO request) {
         Contender savedContender = contenderService.save(ContenderMapper.toContender(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(ContenderMapper.toResponse(savedContender));
     }
@@ -35,7 +36,7 @@ public class ContenderController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ContenderResponseDTO> update(@PathVariable Long id,
-                                                       @RequestBody ContenderDTO request) {
+                                                       @RequestBody @Valid ContenderDTO request) {
         return contenderService.update(id, ContenderMapper.toContender(request))
                 .map(contender -> ResponseEntity.ok(ContenderMapper.toResponse(contender)))
                 .orElse(ResponseEntity.notFound().build());
