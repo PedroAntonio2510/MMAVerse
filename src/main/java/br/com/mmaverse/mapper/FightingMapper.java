@@ -19,7 +19,7 @@ public class FightingMapper {
                 .id(request.contenderRedCorner()).build();
 
         Contender contenderWinner = Contender.builder()
-                .id(0L).build();
+                .id(request.contenderWinner()).build();
 
         Event organization = Event.builder().id(request.event()).build();
 

@@ -29,10 +29,13 @@ public class FightingService {
         Contender contenderBlueCornerFound = getContender(fighting.getContenderBlueCorner().getId());
         Contender contenderRedCornerFound = getContender(fighting.getContenderRedCorner().getId());
 
+        if (fighting.getWinner().getId() != null) {
+            fighting.setWinner(getContender(fighting.getWinner().getId()));
+        }
+
         fighting.setEvent(eventFound);
         fighting.setContenderBlueCorner(contenderBlueCornerFound);
         fighting.setContenderRedCorner(contenderRedCornerFound);
-        fighting.setWinner(null);
         return fightingRepository.save(fighting);
     }
 
@@ -48,6 +51,30 @@ public class FightingService {
         fightingRepository.deleteById(id);
     }
 
+    public Optional<Fighting> update(Long id, Fighting updateFighting) {
+        Optional<Fighting> optFighting = fightingRepository.findById(id);
+        if (optFighting.isPresent()) {
+            Contender contenderRedCorner = getContender(updateFighting.getContenderRedCorner().getId());
+            Contender contenderBlueCorner = getContender(updateFighting.getContenderBlueCorner().getId());
+            Contender contenderWinner = getContenderWinner(updateFighting.getWinner().getId()).orElse(null);
+            Event eventUpdate = getEvent(updateFighting.getEvent().getId());
+
+            Fighting fighting = optFighting.get();
+            fighting.setContenderRedCorner(contenderRedCorner);
+            fighting.setContenderBlueCorner(contenderBlueCorner);
+            fighting.setWinner(contenderWinner);
+            fighting.setEvent(eventUpdate);
+            fighting.setMethodOfVictory(updateFighting.getMethodOfVictory());
+            fighting.setEndRound(updateFighting.getEndRound());
+            fighting.setEndTime(updateFighting.getEndTime());
+
+            fightingRepository.save(fighting);
+
+            return Optional.of(fighting);
+        }
+        return Optional.empty();
+    }
+
     public Event getEvent(Long id) {
         Optional<Event> event = eventService.findById(id);
         return event.orElseThrow(() -> new IllegalArgumentException("Event not found"));
@@ -58,4 +85,7 @@ public class FightingService {
         return  contender.orElseThrow(() -> new IllegalArgumentException("Contender not found"));
     }
 
+    public Optional<Contender> getContenderWinner(Long id) {
+        return contenderService.findById(id);
+    }
 }
