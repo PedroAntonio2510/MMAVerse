@@ -55,9 +55,7 @@ public class EventController {
     @PutMapping("/{id}")
     public ResponseEntity<Event> update(@PathVariable Long id,
                                         @RequestBody @Valid EventDTO request) {
-        return eventService.update(id, EventMapper.toEntity(request))
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(eventService.update(id, EventMapper.toEntity(request)));
     }
 
     @Operation(summary = "Find an event by ID", description = "Returns a single event.")
@@ -67,9 +65,7 @@ public class EventController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<Event> findById(@PathVariable Long id) {
-        return eventService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(eventService.findById(id));
     }
 
     @Operation(summary = "Delete an event", description = "Deletes an event.")

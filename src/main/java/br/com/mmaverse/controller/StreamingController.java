@@ -54,9 +54,8 @@ public class StreamingController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<Streaming> update(@PathVariable Long id, @RequestBody @Valid StreamingDTO request) {
-        return streamingService.update(id, StreamingMapper.toStreaming(request))
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Streaming updateStreaming = streamingService.update(id, StreamingMapper.toStreaming(request));
+        return ResponseEntity.ok(updateStreaming);
     }
 
     @Operation(summary = "Find a streaming by ID", description = "Returns a single streaming.")
@@ -66,9 +65,8 @@ public class StreamingController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<Streaming> findById(@PathVariable Long id) {
-        return streamingService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Streaming streaming = streamingService.findById(id);
+        return ResponseEntity.ok(streaming);
     }
 
     @Operation(summary = "Delete a streaming", description = "Deletes a streaming.")

@@ -1,11 +1,11 @@
 package br.com.mmaverse.service;
 
 import br.com.mmaverse.entity.Gym;
+import br.com.mmaverse.exception.EntityNotFoundException;
 import br.com.mmaverse.repository.GymRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GymService {
@@ -24,26 +24,25 @@ public class GymService {
         return repository.save(gym);
     }
 
-    public Optional<Gym> findById(Long id) {
-        return repository.findById(id);
+    public Gym findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Gym not found with id: " + id));
     }
 
     public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new EntityNotFoundException("Gym not found with id: " + id);
+        }
         repository.deleteById(id);
     }
 
-    public Optional<Gym> update(Long id, Gym updateGym) {
-        Optional<Gym> optGym = repository.findById(id);
-        if (optGym.isPresent()) {
-            Gym gym = optGym.get();
-
-            gym.setName(updateGym.getName());
-            gym.setLocation(updateGym.getLocation());
-            gym.setFoundation(updateGym.getFoundation());
-            repository.save(gym);
-
-            return Optional.of(gym);
-        }
-        return Optional.empty();
+    public Gym update(Long id, Gym updateGym) {
+        Gym gym = findById(id);
+        return repository.save(Gym.builder()
+                .id(gym.getId())
+                .name(updateGym.getName())
+                .location(updateGym.getLocation())
+                .foundation(updateGym.getFoundation())
+                .build());
     }
 }

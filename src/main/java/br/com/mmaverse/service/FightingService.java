@@ -3,6 +3,7 @@ package br.com.mmaverse.service;
 import br.com.mmaverse.entity.Contender;
 import br.com.mmaverse.entity.Event;
 import br.com.mmaverse.entity.Fighting;
+import br.com.mmaverse.exception.EntityNotFoundException;
 import br.com.mmaverse.repository.FightingRepository;
 import org.springframework.stereotype.Service;
 
@@ -43,49 +44,48 @@ public class FightingService {
         return fightingRepository.findAll();
     }
 
-    public Optional<Fighting> findById(Long id) {
-        return fightingRepository.findById(id);
+    public Fighting findById(Long id) {
+        return fightingRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Fighting not found with id: " + id));
     }
 
     public void delete(Long id) {
+        if (!fightingRepository.existsById(id)) {
+            throw new EntityNotFoundException("Fighting not found with id: " + id);
+        }
         fightingRepository.deleteById(id);
     }
 
-    public Optional<Fighting> update(Long id, Fighting updateFighting) {
-        Optional<Fighting> optFighting = fightingRepository.findById(id);
-        if (optFighting.isPresent()) {
-            Contender contenderRedCorner = getContender(updateFighting.getContenderRedCorner().getId());
-            Contender contenderBlueCorner = getContender(updateFighting.getContenderBlueCorner().getId());
-            Contender contenderWinner = getContenderWinner(updateFighting.getWinner().getId()).orElse(null);
-            Event eventUpdate = getEvent(updateFighting.getEvent().getId());
+    public Fighting update(Long id, Fighting updateFighting) {
+        Fighting fighting = findById(id);
+        Contender contenderRedCorner = getContender(updateFighting.getContenderRedCorner().getId());
+        Contender contenderBlueCorner = getContender(updateFighting.getContenderBlueCorner().getId());
+        Contender contenderWinner = getContenderWinner(updateFighting.getWinner().getId());
+        Event eventUpdate = getEvent(updateFighting.getEvent().getId());
 
-            Fighting fighting = optFighting.get();
-            fighting.setContenderRedCorner(contenderRedCorner);
-            fighting.setContenderBlueCorner(contenderBlueCorner);
-            fighting.setWinner(contenderWinner);
-            fighting.setEvent(eventUpdate);
-            fighting.setMethodOfVictory(updateFighting.getMethodOfVictory());
-            fighting.setEndRound(updateFighting.getEndRound());
-            fighting.setEndTime(updateFighting.getEndTime());
+        fighting.setContenderRedCorner(contenderRedCorner);
+        fighting.setContenderBlueCorner(contenderBlueCorner);
+        fighting.setWinner(contenderWinner);
+        fighting.setEvent(eventUpdate);
+        fighting.setMethodOfVictory(updateFighting.getMethodOfVictory());
+        fighting.setEndRound(updateFighting.getEndRound());
+        fighting.setEndTime(updateFighting.getEndTime());
 
-            fightingRepository.save(fighting);
-
-            return Optional.of(fighting);
-        }
-        return Optional.empty();
+        return fightingRepository.save(fighting);
     }
 
     public Event getEvent(Long id) {
-        Optional<Event> event = eventService.findById(id);
-        return event.orElseThrow(() -> new IllegalArgumentException("Event not found"));
+        return eventService.findById(id);
     }
 
     public Contender getContender(Long id) {
-        Optional<Contender> contender = contenderService.findById(id);
-        return  contender.orElseThrow(() -> new IllegalArgumentException("Contender not found"));
+        return contenderService.findById(id);
     }
 
-    public Optional<Contender> getContenderWinner(Long id) {
-        return contenderService.findById(id);
+    public Contender getContenderWinner(Long id) {
+        if (id == null) {
+            return null;
+        }
+        return getContender(id);
     }
 }

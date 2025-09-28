@@ -4,4 +4,5 @@ import br.com.mmaverse.entity.Contender;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ContenderRepository extends JpaRepository<Contender, Long> {
+    boolean existsByCpf(String cpf);
 }

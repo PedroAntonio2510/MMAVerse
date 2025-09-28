@@ -54,9 +54,7 @@ public class GymController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<Gym> update(@PathVariable Long id, @RequestBody @Valid GymDTO request) {
-        return gymService.update(id, GymMapper.toGym(request))
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(gymService.update(id, GymMapper.toGym(request)));
     }
 
     @Operation(summary = "Find a gym by ID", description = "Returns a single gym.")
@@ -66,9 +64,7 @@ public class GymController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<Gym> findById(@PathVariable Long id) {
-        return gymService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(gymService.findById(id));
     }
 
     @Operation(summary = "Delete a gym", description = "Deletes a gym.")

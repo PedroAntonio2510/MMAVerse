@@ -55,9 +55,7 @@ public class OrganizationController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<Organization> update(@PathVariable Long id, @RequestBody @Valid OrganizationDTO request) {
-        return organizationService.update(id, OrganizationMapper.toOrganization(request))
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(organizationService.update(id, OrganizationMapper.toOrganization(request)));
     }
 
     @Operation(summary = "Find an organization by ID", description = "Returns a single organization.")
@@ -67,9 +65,7 @@ public class OrganizationController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<Organization> findById(@PathVariable Long id) {
-        return organizationService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(organizationService.findById(id));
     }
 
     @Operation(summary = "Delete an organization", description = "Deletes an organization.")

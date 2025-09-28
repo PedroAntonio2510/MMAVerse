@@ -56,8 +56,6 @@ public class FightingController {
     @PutMapping("/{id}")
     public ResponseEntity<FightingResponseDTO> update(@PathVariable Long id,
                                                 @RequestBody @Valid FightingDTO request) {
-        return fightingService.update(id, FightingMapper.toFighting(request))
-                .map(fighting -> ResponseEntity.ok(FightingMapper.toResponse(fighting)))
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(FightingMapper.toResponse(fightingService.update(id, FightingMapper.toFighting(request))));
     }
 }

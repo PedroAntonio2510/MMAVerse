@@ -1,11 +1,11 @@
 package br.com.mmaverse.service;
 
 import br.com.mmaverse.entity.Streaming;
+import br.com.mmaverse.exception.EntityNotFoundException;
 import br.com.mmaverse.repository.StreamingRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StreamingService {
@@ -24,23 +24,21 @@ public class StreamingService {
         return repository.save(streaming);
     }
 
-    public Optional<Streaming> findById(Long id) {
-        return repository.findById(id);
+    public Streaming findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Streaming not found with id: " + id));
     }
 
     public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new EntityNotFoundException("Streaming not found with id: " + id);
+        }
         repository.deleteById(id);
     }
 
-    public Optional<Streaming> update(Long id, Streaming updateStreaming) {
-        Optional<Streaming> optStreaming = repository.findById(id);
-        if (optStreaming.isPresent()) {
-            Streaming streaming = optStreaming.get();
-            streaming.setName(updateStreaming.getName());
-            repository.save(streaming);
-
-            return Optional.of(streaming);
-        }
-        return Optional.empty();
+    public Streaming update(Long id, Streaming updateStreaming) {
+        Streaming streaming = findById(id);
+        streaming.setName(updateStreaming.getName());
+        return repository.save(streaming);
     }
 }

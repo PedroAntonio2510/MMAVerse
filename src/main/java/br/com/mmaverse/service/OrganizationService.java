@@ -1,12 +1,11 @@
 package br.com.mmaverse.service;
 
 import br.com.mmaverse.entity.Organization;
-import br.com.mmaverse.entity.Streaming;
+import br.com.mmaverse.exception.EntityNotFoundException;
 import br.com.mmaverse.repository.OrganizationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrganizationService {
@@ -25,24 +24,22 @@ public class OrganizationService {
         return repository.save(Organization);
     }
 
-    public Optional<Organization> findById(Long id) {
-        return repository.findById(id);
+    public Organization findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Organization not found with id: " + id));
     }
 
     public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new EntityNotFoundException("Organization not found with id: " + id);
+        }
         repository.deleteById(id);
     }
 
-    public Optional<Organization> update(Long id, Organization updateOrganization) {
-        Optional<Organization> optOrganization = repository.findById(id);
-        if (optOrganization.isPresent()) {
-            Organization organization = optOrganization.get();
-            organization.setName(updateOrganization.getName());
-            organization.setCnpj(updateOrganization.getCnpj());
-            repository.save(organization);
-
-            return Optional.of(organization);
-        }
-        return Optional.empty();
+    public Organization update(Long id, Organization updateOrganization) {
+        Organization organization = findById(id);
+        organization.setName(updateOrganization.getName());
+        organization.setCnpj(updateOrganization.getCnpj());
+        return repository.save(organization);
     }
 }

@@ -57,10 +57,8 @@ public class ContenderController {
     @PutMapping("/{id}")
     public ResponseEntity<ContenderResponseDTO> update(@PathVariable Long id,
                                                        @RequestBody @Valid ContenderDTO request) {
-        return contenderService.update(id, ContenderMapper.toContender(request))
-                .map(contender -> ResponseEntity.ok(ContenderMapper.toResponse(contender)))
-                .orElse(ResponseEntity.notFound().build());
-
+        Contender updatedContender = contenderService.update(id, ContenderMapper.toContender(request));
+        return ResponseEntity.ok(ContenderMapper.toResponse(updatedContender));
     }
 
     @Operation(summary = "Find a contender by ID", description = "Returns a single contender.")
@@ -70,9 +68,7 @@ public class ContenderController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<Contender> findById(@PathVariable Long id) {
-        return contenderService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(contenderService.findById(id));
     }
 
     @Operation(summary = "Delete a contender", description = "Deletes a contender.")

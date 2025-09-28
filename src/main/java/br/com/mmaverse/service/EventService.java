@@ -3,12 +3,12 @@ package br.com.mmaverse.service;
 import br.com.mmaverse.entity.Event;
 import br.com.mmaverse.entity.Organization;
 import br.com.mmaverse.entity.Streaming;
+import br.com.mmaverse.exception.EntityNotFoundException;
 import br.com.mmaverse.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EventService {
@@ -33,42 +33,39 @@ public class EventService {
         return repository.save(event);
     }
 
-    public Optional<Event> findById(Long id) {
-        return repository.findById(id);
+    public Event findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Event not found with id: " + id));
     }
 
     public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new EntityNotFoundException("Event not found with id: " + id);
+        }
         repository.deleteById(id);
     }
 
-    public Optional<Event> update(Long id, Event updateEvent) {
-        Optional<Event> optEvent = repository.findById(id);
-        if (optEvent.isPresent()) {
-            List<Streaming> streamings = findStreamings(updateEvent.getStreaming());
-            Organization organization = findOrganization(updateEvent.getOrganization().getId());
+    public Event update(Long id, Event updateEvent) {
+        Event event = findById(id);
+        List<Streaming> streamings = findStreamings(updateEvent.getStreaming());
+        Organization organization = findOrganization(updateEvent.getOrganization().getId());
 
-            Event event = optEvent.get();
-            event.setName(updateEvent.getName());
-            event.setLocation(updateEvent.getLocation());
-            event.setStartDate(updateEvent.getStartDate());
-            event.setStreaming(streamings);
-            event.setOrganization(organization);
+        event.setName(updateEvent.getName());
+        event.setLocation(updateEvent.getLocation());
+        event.setStartDate(updateEvent.getStartDate());
+        event.setStreaming(streamings);
+        event.setOrganization(organization);
 
-            repository.save(event);
-            return Optional.of(event);
-        }
-        return Optional.empty();
+        return repository.save(event);
     }
 
     public List<Streaming> findStreamings(List<Streaming> streamings) {
         List<Streaming> streamingsFound = new ArrayList<>();
-        streamings.forEach(streaming -> streamingService.findById(streaming.getId())
-                .ifPresent(streamingsFound::add));
+        streamings.forEach(streaming -> streamingsFound.add(streamingService.findById(streaming.getId())));
         return streamingsFound;
     }
 
     public Organization findOrganization(Long id) {
-        Optional<Organization> organizationFound = organizationService.findById(id);
-        return organizationFound.orElseThrow(() -> new IllegalArgumentException("Organization not found"));
+        return organizationService.findById(id);
     }
 }
