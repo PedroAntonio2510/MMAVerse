@@ -3,7 +3,7 @@ package br.com.mmaverse.service;
 import br.com.mmaverse.entity.Event;
 import br.com.mmaverse.entity.Organization;
 import br.com.mmaverse.entity.Streaming;
-import br.com.mmaverse.exception.EntityNotFoundException;
+import br.com.mmaverse.exception.ResourceNotFoundException;
 import br.com.mmaverse.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
@@ -35,12 +35,12 @@ public class EventService {
 
     public Event findById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Event not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Event not found with id: " + id));
     }
 
     public void delete(Long id) {
         if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("Event not found with id: " + id);
+            throw new ResourceNotFoundException("Event not found with id: " + id);
         }
         repository.deleteById(id);
     }

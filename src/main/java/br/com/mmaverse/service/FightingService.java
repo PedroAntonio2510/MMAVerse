@@ -3,12 +3,11 @@ package br.com.mmaverse.service;
 import br.com.mmaverse.entity.Contender;
 import br.com.mmaverse.entity.Event;
 import br.com.mmaverse.entity.Fighting;
-import br.com.mmaverse.exception.EntityNotFoundException;
+import br.com.mmaverse.exception.ResourceNotFoundException;
 import br.com.mmaverse.repository.FightingRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FightingService {
@@ -46,12 +45,12 @@ public class FightingService {
 
     public Fighting findById(Long id) {
         return fightingRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Fighting not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Fighting not found with id: " + id));
     }
 
     public void delete(Long id) {
         if (!fightingRepository.existsById(id)) {
-            throw new EntityNotFoundException("Fighting not found with id: " + id);
+            throw new ResourceNotFoundException("Fighting not found with id: " + id);
         }
         fightingRepository.deleteById(id);
     }

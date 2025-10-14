@@ -1,7 +1,7 @@
 package br.com.mmaverse.service;
 
 import br.com.mmaverse.entity.Gym;
-import br.com.mmaverse.exception.EntityNotFoundException;
+import br.com.mmaverse.exception.ResourceNotFoundException;
 import br.com.mmaverse.repository.GymRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +26,12 @@ public class GymService {
 
     public Gym findById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Gym not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Gym not found with id: " + id));
     }
 
     public void delete(Long id) {
         if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("Gym not found with id: " + id);
+            throw new ResourceNotFoundException("Gym not found with id: " + id);
         }
         repository.deleteById(id);
     }

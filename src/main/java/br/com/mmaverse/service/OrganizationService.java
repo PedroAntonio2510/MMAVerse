@@ -1,7 +1,7 @@
 package br.com.mmaverse.service;
 
 import br.com.mmaverse.entity.Organization;
-import br.com.mmaverse.exception.EntityNotFoundException;
+import br.com.mmaverse.exception.ResourceNotFoundException;
 import br.com.mmaverse.repository.OrganizationRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +26,12 @@ public class OrganizationService {
 
     public Organization findById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Organization not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Organization not found with id: " + id));
     }
 
     public void delete(Long id) {
         if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("Organization not found with id: " + id);
+            throw new ResourceNotFoundException("Organization not found with id: " + id);
         }
         repository.deleteById(id);
     }

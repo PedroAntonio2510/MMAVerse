@@ -1,6 +1,6 @@
 package br.com.mmaverse.config;
 
-import br.com.mmaverse.exception.EntityNotFoundException;
+import br.com.mmaverse.exception.ResourceNotFoundException;
 import br.com.mmaverse.exception.InvalidCpfException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -25,9 +25,9 @@ public class ApplicationControllerAdvice {
         return errors;
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
+    @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleEntityNotFoundException(EntityNotFoundException ex) {
+    public String handleEntityNotFoundException(ResourceNotFoundException ex) {
         return ex.getMessage();
     }
 

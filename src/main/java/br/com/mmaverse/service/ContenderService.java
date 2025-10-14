@@ -2,7 +2,7 @@ package br.com.mmaverse.service;
 
 import br.com.mmaverse.entity.Contender;
 import br.com.mmaverse.entity.Gym;
-import br.com.mmaverse.exception.EntityNotFoundException;
+import br.com.mmaverse.exception.ResourceNotFoundException;
 import br.com.mmaverse.exception.InvalidCpfException;
 import br.com.mmaverse.repository.ContenderRepository;
 import org.springframework.stereotype.Service;
@@ -38,12 +38,12 @@ public class ContenderService {
 
     public Contender findById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Contender not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Contender not found with id: " + id));
     }
 
     public void delete(Long id) {
         if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("Contender not found with id: " + id);
+            throw new ResourceNotFoundException("Contender not found with id: " + id);
         }
         repository.deleteById(id);
     }
