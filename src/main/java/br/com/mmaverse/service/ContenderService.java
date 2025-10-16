@@ -2,9 +2,11 @@ package br.com.mmaverse.service;
 
 import br.com.mmaverse.entity.Contender;
 import br.com.mmaverse.entity.Gym;
+import br.com.mmaverse.entity.Ranking;
 import br.com.mmaverse.exception.ResourceNotFoundException;
 import br.com.mmaverse.exception.InvalidCpfException;
 import br.com.mmaverse.repository.ContenderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,10 +19,17 @@ public class ContenderService {
     
     private final ContenderRepository repository;
     private final GymService gymService;
+    private RankingService rankingService;
 
-    public ContenderService(ContenderRepository repository, GymService gymService) {
+    public ContenderService(ContenderRepository repository, GymService gymService, RankingService rankingService) {
         this.repository = repository;
         this.gymService = gymService;
+        this.rankingService = rankingService;
+    }
+
+    @Autowired
+    public void setRankingService(RankingService rankingService) {
+        this.rankingService = rankingService;
     }
 
     public List<Contender> findAll() {
@@ -33,6 +42,7 @@ public class ContenderService {
         }
         contender.setAge(getAge(contender.getBirthDate()));
         contender.setGyms(findGym(contender.getGyms()));
+        contender.setRanking(findRanking(contender.getRanking()));
         return repository.save(contender);
     }
 
@@ -51,6 +61,7 @@ public class ContenderService {
     public Contender update(Long id, Contender updateContender) {
         Contender contender = findById(id);
         List<Gym> gyms = findGym(updateContender.getGyms());
+        Ranking ranking = findRanking(updateContender.getRanking());
 
         contender.setName(updateContender.getName());
         contender.setNickname(updateContender.getNickname());
@@ -63,9 +74,10 @@ public class ContenderService {
         contender.setWin(updateContender.getWin());
         contender.setLose(updateContender.getLose());
         contender.setGyms(gyms);
-
+        contender.setRanking(ranking);
         return repository.save(contender);
     }
+
 
     public Integer getAge(LocalDate dateOfBirth) {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();
@@ -75,5 +87,12 @@ public class ContenderService {
         List<Gym> gymsFound = new ArrayList<>();
         gyms.forEach(gym -> gymsFound.add(gymService.findById(gym.getId())));
         return gymsFound;
+    }
+
+    private Ranking findRanking(Ranking ranking) {
+        if (ranking == null || ranking.getId() == null) {
+            return null;
+        }
+        return rankingService.findById(ranking.getId());
     }
 }

@@ -49,6 +49,8 @@ public record ContenderDTO(
         @Schema(description = "Number of draws", example = "0")
         int draw,
 
+        Long ranking_id,
+
         @Schema(description = "List of gym IDs", example = "[1, 2]")
         List<Long> gyms)
 {

@@ -4,6 +4,7 @@ import br.com.mmaverse.dto.ContenderDTO;
 import br.com.mmaverse.dto.ContenderResponseDTO;
 import br.com.mmaverse.entity.Contender;
 import br.com.mmaverse.entity.Gym;
+import br.com.mmaverse.entity.Ranking;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public class ContenderMapper {
                 .id(gymId)
                 .build()).toList();
 
+        Ranking ranking = Ranking.builder().id(request.ranking_id()).build();
+
         return Contender.builder()
                 .name(request.name())
                 .nickname(request.nickname())
@@ -29,6 +32,7 @@ public class ContenderMapper {
                 .lose(request.lose())
                 .draw(request.draw())
                 .gyms(gyms)
+                .ranking(ranking)
                 .build();
     }
 

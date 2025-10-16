@@ -13,4 +13,11 @@ public class OrganizationMapper {
                 .cnpj(request.cnpj())
                 .build();
     }
+
+    public static OrganizationDTO toDTO(Organization organization) {
+        return OrganizationDTO.builder()
+                .name(organization.getName())
+                .cnpj(organization.getCnpj())
+                .build();
+    }
 }

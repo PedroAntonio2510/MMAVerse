@@ -2,7 +2,6 @@ package br.com.mmaverse.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,7 +17,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "contender")
-public class Contender {
+public class    Contender {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,6 +59,10 @@ public class Contender {
             inverseJoinColumns = @JoinColumn(name = "gym_id")
     )
     private List<Gym> gyms;
+
+    @ManyToOne
+    @JoinColumn(name = "ranking_id")
+    private Ranking ranking;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

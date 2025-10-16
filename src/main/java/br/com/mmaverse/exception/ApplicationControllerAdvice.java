@@ -1,7 +1,5 @@
-package br.com.mmaverse.config;
+package br.com.mmaverse.exception;
 
-import br.com.mmaverse.exception.ResourceNotFoundException;
-import br.com.mmaverse.exception.InvalidCpfException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
