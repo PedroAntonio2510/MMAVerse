@@ -29,10 +29,6 @@ public class FightingService {
         Contender contenderBlueCornerFound = getContender(fighting.getContenderBlueCorner().getId());
         Contender contenderRedCornerFound = getContender(fighting.getContenderRedCorner().getId());
 
-        if (fighting.getWinner().getId() != null) {
-            fighting.setWinner(getContender(fighting.getWinner().getId()));
-        }
-
         fighting.setEvent(eventFound);
         fighting.setContenderBlueCorner(contenderBlueCornerFound);
         fighting.setContenderRedCorner(contenderRedCornerFound);

@@ -13,7 +13,7 @@ public record FightingDTO(
         @Schema(description = "ID of the contender in the red corner", example = "1")
         @NotNull(message = "Fighter Id is necessary")
         Long contenderRedCorner,
-    
+
         @Schema(description = "ID of the contender in the blue corner", example = "2")
         @NotNull(message = "Fighter Id is necessary")
         Long contenderBlueCorner,

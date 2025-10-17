@@ -17,13 +17,13 @@ public class RankingService {
 
     private final RankingRepository rankingRepository;
     private final OrganizationService organizationService;
+    @Autowired
     private ContenderService contenderService;
     
     public RankingService(RankingRepository rankingRepository, OrganizationService organizationService) {
         this.rankingRepository = rankingRepository;
         this.organizationService = organizationService;
     }
-
 
     public List<Ranking> findAll() {
         return rankingRepository.findAll();
@@ -43,10 +43,16 @@ public class RankingService {
     }
 
     public void delete(Long id) {
-        if (!rankingRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Ranking not found with id: " + id);
-        }
-        rankingRepository.deleteById(id);
+        /*
+        *  Localizo o ranking, e coloco os ranking_id dos contenders null e
+        * atualizo para não dar erro no banco de dados ao tentar deletar um ranking
+        * */
+        Ranking ranking = findById(id);
+        ranking.getContenders().forEach(contender -> {
+            contender.setRanking(null);
+            contenderService.update(contender.getId(), contender);
+        });
+        rankingRepository.delete(ranking);
     }
 
     public Ranking update(Long id, Ranking ranking) {

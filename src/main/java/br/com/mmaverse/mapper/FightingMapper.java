@@ -18,16 +18,12 @@ public class FightingMapper {
         Contender contenderRedCorner = Contender.builder()
                 .id(request.contenderRedCorner()).build();
 
-        Contender contenderWinner = Contender.builder()
-                .id(0L).build();
-
-        Event organization = Event.builder().id(request.event()).build();
+        Event event = Event.builder().id(request.event()).build();
 
         return Fighting.builder()
-                .event(organization)
+                .event(event)
                 .contenderRedCorner(contenderRedCorner)
                 .contenderBlueCorner(contenderBlueCorner)
-                .winner(contenderWinner)
                 .endRound(request.endRound())
                 .endTime(request.endTime())
                 .methodOfVictory(request.methodOfVictory())

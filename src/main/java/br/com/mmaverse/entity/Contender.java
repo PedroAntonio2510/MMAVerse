@@ -1,6 +1,6 @@
 package br.com.mmaverse.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "contender")
-public class    Contender {
+public class Contender {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,16 +52,17 @@ public class    Contender {
 
     private int draw;
 
-    @JsonBackReference
     @ManyToMany
     @JoinTable(name = "contender_gym",
             joinColumns = @JoinColumn(name = "contender_id"),
             inverseJoinColumns = @JoinColumn(name = "gym_id")
     )
+    @JsonIgnoreProperties("contenders")
     private List<Gym> gyms;
 
     @ManyToOne
     @JoinColumn(name = "ranking_id")
+    @JsonIgnoreProperties("contenders")
     private Ranking ranking;
 
     @CreationTimestamp

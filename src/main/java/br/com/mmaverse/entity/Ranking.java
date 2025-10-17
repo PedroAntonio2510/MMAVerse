@@ -1,12 +1,13 @@
 package br.com.mmaverse.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -33,6 +34,8 @@ public class Ranking {
     private Organization organization;
 
     @OneToMany(mappedBy = "ranking")
+    @JsonIgnoreProperties("ranking")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Contender> contenders;
 
     @UpdateTimestamp

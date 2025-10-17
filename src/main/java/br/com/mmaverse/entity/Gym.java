@@ -32,7 +32,6 @@ public class Gym {
     @Column(name = "foundation", nullable = false)
     private Integer foundation;
 
-    @JsonManagedReference
     @ManyToMany(mappedBy = "gyms")
     private List<Contender> contenders;
 

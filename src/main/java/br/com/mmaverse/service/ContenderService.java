@@ -7,6 +7,7 @@ import br.com.mmaverse.exception.ResourceNotFoundException;
 import br.com.mmaverse.exception.InvalidCpfException;
 import br.com.mmaverse.repository.ContenderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,16 +20,11 @@ public class ContenderService {
     
     private final ContenderRepository repository;
     private final GymService gymService;
-    private RankingService rankingService;
+    private final RankingService rankingService;
 
-    public ContenderService(ContenderRepository repository, GymService gymService, RankingService rankingService) {
+    public ContenderService(ContenderRepository repository, GymService gymService, @Lazy RankingService rankingService) {
         this.repository = repository;
         this.gymService = gymService;
-        this.rankingService = rankingService;
-    }
-
-    @Autowired
-    public void setRankingService(RankingService rankingService) {
         this.rankingService = rankingService;
     }
 
