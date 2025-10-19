@@ -1,6 +1,7 @@
 package br.com.mmaverse.controller;
 
 import br.com.mmaverse.dto.GymDTO;
+import br.com.mmaverse.dto.GymResponseDTO;
 import br.com.mmaverse.entity.Gym;
 import br.com.mmaverse.mapper.GymMapper;
 import br.com.mmaverse.service.GymService;
@@ -31,8 +32,9 @@ public class GymController {
         @ApiResponse(responseCode = "200", description = "Successfully retrieved list")
     })
     @GetMapping
-    public ResponseEntity<List<Gym>> findAll() {
-        return ResponseEntity.ok(gymService.findAll());
+    public ResponseEntity<List<GymResponseDTO>> findAll() {
+        List<GymResponseDTO> gyms = gymService.findAll().stream().map(GymMapper::toGymResponse).toList();
+        return ResponseEntity.ok(gyms);
     }
 
     @Operation(summary = "Save a gym", description = "Saves a new gym.")
@@ -41,9 +43,9 @@ public class GymController {
         @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PostMapping
-    public ResponseEntity<Gym> save(@RequestBody @Valid GymDTO Gym) {
+    public ResponseEntity<GymResponseDTO> save(@RequestBody @Valid GymDTO Gym) {
         Gym savedGym = gymService.save(GymMapper.toGym(Gym));
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedGym);
+        return ResponseEntity.status(HttpStatus.CREATED).body(GymMapper.toGymResponse(savedGym));
     }
 
     @Operation(summary = "Update a gym", description = "Updates an existing gym.")
@@ -53,8 +55,9 @@ public class GymController {
         @ApiResponse(responseCode = "404", description = "Gym not found")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<Gym> update(@PathVariable Long id, @RequestBody @Valid GymDTO request) {
-        return ResponseEntity.ok(gymService.update(id, GymMapper.toGym(request)));
+    public ResponseEntity<GymResponseDTO> update(@PathVariable Long id, @RequestBody @Valid GymDTO request) {
+        Gym updateGym = gymService.update(id, GymMapper.toGym(request));
+        return ResponseEntity.ok(GymMapper.toGymResponse(updateGym));
     }
 
     @Operation(summary = "Find a gym by ID", description = "Returns a single gym.")
@@ -63,8 +66,9 @@ public class GymController {
         @ApiResponse(responseCode = "404", description = "Gym not found")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<Gym> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(gymService.findById(id));
+    public ResponseEntity<GymResponseDTO> findById(@PathVariable Long id) {
+        Gym gymFound = gymService.findById(id);
+        return ResponseEntity.ok(GymMapper.toGymResponse(gymFound));
     }
 
     @Operation(summary = "Delete a gym", description = "Deletes a gym.")
