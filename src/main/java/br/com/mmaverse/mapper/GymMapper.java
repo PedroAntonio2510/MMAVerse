@@ -20,6 +20,7 @@ public class GymMapper {
 
     public static GymResponseDTO toGymResponse(Gym gym) {
         return GymResponseDTO.builder()
+                .id(gym.getId())
                 .name(gym.getName())
                 .foundation(gym.getFoundation())
                 .location(gym.getLocation())

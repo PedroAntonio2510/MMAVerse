@@ -8,6 +8,9 @@ import java.util.List;
 @Builder
 @Schema(name = "GymResponseDTO", description = "Data transfer object for a gym")
 public record GymResponseDTO(
+        @Schema(description = "Id of the gym")
+        Long id,
+
         @Schema(description = "Name of the gym", example = "American Top Team")
         String name,
 
