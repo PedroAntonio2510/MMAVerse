@@ -3,10 +3,9 @@ package br.com.mmaverse.service;
 import br.com.mmaverse.entity.Contender;
 import br.com.mmaverse.entity.Gym;
 import br.com.mmaverse.entity.Ranking;
+import br.com.mmaverse.exception.ExistingCpfException;
 import br.com.mmaverse.exception.ResourceNotFoundException;
-import br.com.mmaverse.exception.InvalidCpfException;
 import br.com.mmaverse.repository.ContenderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +33,7 @@ public class ContenderService {
 
     public Contender save(Contender contender) {
         if (repository.existsByCpf(contender.getCpf())) {
-            throw new InvalidCpfException("CPF already exists");
+            throw new ExistingCpfException("CPF already exists");
         }
         contender.setAge(getAge(contender.getBirthDate()));
         contender.setGyms(findGym(contender.getGyms()));

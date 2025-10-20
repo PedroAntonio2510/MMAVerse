@@ -29,9 +29,9 @@ public class ApplicationControllerAdvice {
         return ex.getMessage();
     }
 
-    @ExceptionHandler(InvalidCpfException.class)
+    @ExceptionHandler(ExistingCpfException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleInvalidCpfException(InvalidCpfException ex) {
+    public String handleInvalidCpfException(ExistingCpfException ex) {
         return ex.getMessage();
     }
 }
