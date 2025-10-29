@@ -43,9 +43,9 @@ public class GymController {
         @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PostMapping
-    public ResponseEntity<GymResponseDTO> save(@RequestBody @Valid GymDTO Gym) {
+    public ResponseEntity<Gym> save(@RequestBody @Valid GymDTO Gym) {
         Gym savedGym = gymService.save(GymMapper.toGym(Gym));
-        return ResponseEntity.status(HttpStatus.CREATED).body(GymMapper.toGymResponse(savedGym));
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedGym);
     }
 
     @Operation(summary = "Update a gym", description = "Updates an existing gym.")

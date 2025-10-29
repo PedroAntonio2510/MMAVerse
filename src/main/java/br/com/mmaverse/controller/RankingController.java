@@ -81,4 +81,18 @@ public class RankingController {
         rankingService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{rankingId}/contender/{contenderId}")
+    public ResponseEntity<RankingResponseDTO> addContender(@PathVariable Long rankingId,
+                                                           @PathVariable Long contenderId) {
+        Ranking ranking = rankingService.addContender(rankingId, contenderId);
+        return ResponseEntity.ok(RankingMapper.toResponse(ranking));
+    }
+
+    @DeleteMapping("/{rankingId}/contender/{contenderId}")
+    public ResponseEntity<RankingResponseDTO> removeContender(@PathVariable Long rankingId,
+                                                              @PathVariable Long contenderId) {
+        Ranking ranking = rankingService.removeContender(rankingId, contenderId);
+        return  ResponseEntity.ok(RankingMapper.toResponse(ranking));
+    }
 }

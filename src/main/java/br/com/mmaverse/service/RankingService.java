@@ -66,4 +66,19 @@ public class RankingService {
 
         return rankingRepository.save(rankingToUpdate);
     }
+
+    public Ranking addContender(Long rankingId, Long contenderId) {
+        Ranking ranking = findById(rankingId);
+        Contender contender = contenderService.findById(contenderId);
+        contender.setRanking(ranking);
+        return rankingRepository.save(ranking);
+    }
+
+    public Ranking removeContender(Long rankingId, Long contenderId) {
+        Ranking ranking = findById(rankingId);
+        Contender contender = contenderService.findById(contenderId);
+        contender.setRanking(null);
+        ranking.getContenders().remove(contender);
+        return rankingRepository.save(ranking);
+    }
 }

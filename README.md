@@ -19,11 +19,11 @@ The project is built with Java and the Spring Boot framework, ensuring a robust 
 
 ## Future Implementations
 
-*   **Detailed Fight Statistics:** Track and serve detailed stats for each fight (e.g., takedowns, significant strikes, submission attempts).
-*   **Event Scheduling & Notifications:** Allow users to subscribe to upcoming events and receive notifications.
-*   **User Fight Predictions:** A system for users to make and track their predictions for upcoming fights.
-*   **Public API Documentation:** Enhance the existing Swagger UI with more detailed examples and guides.
-*   **Advanced Search:** Implement more complex search queries (e.g., find all undefeated fighters in a specific weight class).
+*   - [ ] **Detailed Fight Statistics:** Track and serve detailed stats for each fight (e.g., takedowns, significant strikes, submission attempts).
+*   - [ ] **Event Scheduling & Notifications:** Allow users to subscribe to upcoming events and receive notifications.
+*   - [ ] **User Fight Predictions:** A system for users to make and track their predictions for upcoming fights.
+*    - [ ] **Public API Documentation:** Enhance the existing Swagger UI with more detailed examples and guides.
+*   - [ ] **Advanced Search:** Implement more complex search queries (e.g., find all undefeated fighters in a specific weight class).
 
 ## Technologies Used
 
