@@ -1,12 +1,15 @@
 package br.com.mmaverse.mapper;
 
 import br.com.mmaverse.controller.dto.EventDTO;
+import br.com.mmaverse.controller.dto.EventFightCardDTO;
+import br.com.mmaverse.controller.dto.FightingResponseDTO;
 import br.com.mmaverse.entity.Event;
 import br.com.mmaverse.entity.Organization;
 import br.com.mmaverse.entity.Streaming;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @UtilityClass
 public class EventMapper {
@@ -40,6 +43,21 @@ public class EventMapper {
                 .startDate(event.getStartDate())
                 .streamings(streamingIds)
                 .organization(organizationId)
+                .build();
+    }
+
+    public static EventFightCardDTO toEventFightCardDTO(Event event) {
+        List<FightingResponseDTO> fightingResponseDTOS = event.getFightings().stream()
+                .map(FightingMapper::toResponse)
+                .collect(Collectors.toList());
+
+        return EventFightCardDTO.builder()
+                .id(event.getId())
+                .name(event.getName())
+                .location(event.getLocation())
+                .startDate(event.getStartDate())
+                .organization(OrganizationMapper.toDTO(event.getOrganization()))
+                .fights(fightingResponseDTOS)
                 .build();
     }
 }

@@ -24,7 +24,7 @@ The project is built with Java and the Spring Boot framework, ensuring a robust 
 *   - [ ] **User Fight Predictions:** A system for users to make and track their predictions for upcoming fights.
 *   - [ ] **Public API Documentation:** Enhance the existing Swagger UI with more detailed examples and guides.
 *   - [ ] **Advanced Search:** Implement more complex search queries (e.g., find all undefeated fighters in a specific weight class).
-*   - [ ] **Fight Card Endpoint:** Add an endpoint to retrieve the full fight card for a specific event (e.g., `GET /mmaverse/event/{eventId}/fights`).
+*   - [x] **Fight Card Endpoint:** Add an endpoint to retrieve the full fight card for a specific event (e.g., `GET /mmaverse/event/{eventId}/fights`).
 *   - [ ] **Contender Fight History:** Create an endpoint to list all past and upcoming fights for a specific contender (e.g., `GET /mmaverse/contender/{contenderId}/fights`).
 *   - [ ] **User Roles & Permissions:** Implement Role-Based Access Control (RBAC) with roles like "admin" and "editor" to restrict access to sensitive operations.
 *   - [ ] **Fight Results Submission:** Develop a dedicated and secure endpoint for submitting and verifying fight outcomes (e.g., `POST /mmaverse/fighting/{fightingId}/result`).

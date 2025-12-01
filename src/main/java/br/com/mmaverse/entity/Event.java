@@ -38,4 +38,7 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "organization_id")
     private Organization organization;
+
+    @OneToMany(mappedBy = "event")
+    private List<Fighting> fightings;
 }

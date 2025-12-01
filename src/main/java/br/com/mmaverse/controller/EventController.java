@@ -1,6 +1,7 @@
 package br.com.mmaverse.controller;
 
 import br.com.mmaverse.controller.dto.EventDTO;
+import br.com.mmaverse.controller.dto.EventFightCardDTO;
 import br.com.mmaverse.entity.Event;
 import br.com.mmaverse.mapper.EventMapper;
 import br.com.mmaverse.service.EventService;
@@ -41,9 +42,9 @@ public class EventController {
         @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PostMapping
-    public ResponseEntity<Event> save(@RequestBody @Valid EventDTO event) {
+    public ResponseEntity<EventDTO> save(@RequestBody @Valid EventDTO event) {
         Event savedEvent = eventService.save(EventMapper.toEntity(event));
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedEvent);
+        return ResponseEntity.status(HttpStatus.CREATED).body(EventMapper.toDTO(savedEvent));
     }
 
     @Operation(summary = "Update an event", description = "Updates an existing event.")
@@ -77,6 +78,17 @@ public class EventController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         eventService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @Operation(summary = "Find the fight card for an event", description = "Returns the fight card for a single event.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved event fight card"),
+            @ApiResponse(responseCode = "404", description = "Event not found")
+    })
+    @GetMapping("/{id}/fights")
+    public ResponseEntity<EventFightCardDTO> findEventFightCard(@PathVariable Long id) {
+        Event event = eventService.findById(id);
+        return ResponseEntity.ok(EventMapper.toEventFightCardDTO(event));
     }
 
 }
