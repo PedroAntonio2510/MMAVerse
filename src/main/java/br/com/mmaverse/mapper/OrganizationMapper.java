@@ -1,6 +1,6 @@
 package br.com.mmaverse.mapper;
 
-import br.com.mmaverse.dto.OrganizationDTO;
+import br.com.mmaverse.controller.dto.OrganizationDTO;
 import br.com.mmaverse.entity.Organization;
 import lombok.experimental.UtilityClass;
 

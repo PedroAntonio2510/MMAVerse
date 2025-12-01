@@ -1,7 +1,5 @@
-package br.com.mmaverse.dto;
+package br.com.mmaverse.controller.dto;
 
-import br.com.mmaverse.entity.Contender;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 
 import java.time.LocalDateTime;

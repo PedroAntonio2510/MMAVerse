@@ -1,7 +1,7 @@
 package br.com.mmaverse.mapper;
 
-import br.com.mmaverse.dto.RankingDTO;
-import br.com.mmaverse.dto.RankingResponseDTO;
+import br.com.mmaverse.controller.dto.RankingDTO;
+import br.com.mmaverse.controller.dto.RankingResponseDTO;
 import br.com.mmaverse.entity.Contender;
 import br.com.mmaverse.entity.Organization;
 import br.com.mmaverse.entity.Ranking;

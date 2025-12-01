@@ -1,4 +1,4 @@
-package br.com.mmaverse.dto;
+package br.com.mmaverse.controller.dto;
 
 import br.com.mmaverse.entity.Gym;
 import com.fasterxml.jackson.annotation.JsonFormat;

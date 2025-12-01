@@ -1,6 +1,6 @@
 package br.com.mmaverse.controller;
 
-import br.com.mmaverse.dto.EventDTO;
+import br.com.mmaverse.controller.dto.EventDTO;
 import br.com.mmaverse.entity.Event;
 import br.com.mmaverse.mapper.EventMapper;
 import br.com.mmaverse.service.EventService;
@@ -78,4 +78,5 @@ public class EventController {
         eventService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
 }

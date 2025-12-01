@@ -1,5 +1,6 @@
 package br.com.mmaverse.config;
 
+import br.com.mmaverse.config.data.JwtUserData;
 import br.com.mmaverse.entity.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

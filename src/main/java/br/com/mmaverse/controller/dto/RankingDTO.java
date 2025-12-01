@@ -1,4 +1,4 @@
-package br.com.mmaverse.dto;
+package br.com.mmaverse.controller.dto;
 
 import java.util.Set;
 

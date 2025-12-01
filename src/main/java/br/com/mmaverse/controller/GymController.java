@@ -1,7 +1,7 @@
 package br.com.mmaverse.controller;
 
-import br.com.mmaverse.dto.GymDTO;
-import br.com.mmaverse.dto.GymResponseDTO;
+import br.com.mmaverse.controller.dto.GymDTO;
+import br.com.mmaverse.controller.dto.GymResponseDTO;
 import br.com.mmaverse.entity.Gym;
 import br.com.mmaverse.mapper.GymMapper;
 import br.com.mmaverse.service.GymService;

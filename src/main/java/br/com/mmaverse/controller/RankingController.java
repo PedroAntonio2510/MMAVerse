@@ -1,7 +1,7 @@
 package br.com.mmaverse.controller;
 
-import br.com.mmaverse.dto.RankingDTO;
-import br.com.mmaverse.dto.RankingResponseDTO;
+import br.com.mmaverse.controller.dto.RankingDTO;
+import br.com.mmaverse.controller.dto.RankingResponseDTO;
 import br.com.mmaverse.entity.Ranking;
 import br.com.mmaverse.mapper.RankingMapper;
 import br.com.mmaverse.service.RankingService;
@@ -82,6 +82,12 @@ public class RankingController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Add contender to a ranking", description = "add the contender to a existing ranking")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ranking updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "Ranking/contender not found")
+    })
     @PostMapping("/{rankingId}/contender/{contenderId}")
     public ResponseEntity<RankingResponseDTO> addContender(@PathVariable Long rankingId,
                                                            @PathVariable Long contenderId) {
@@ -89,6 +95,11 @@ public class RankingController {
         return ResponseEntity.ok(RankingMapper.toResponse(ranking));
     }
 
+    @Operation(summary = "Remove a contender on the rank", description = "removes a contender on the rank")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Contender removed successfully"),
+            @ApiResponse(responseCode = "404", description = "Ranking/Contender not found")
+    })
     @DeleteMapping("/{rankingId}/contender/{contenderId}")
     public ResponseEntity<RankingResponseDTO> removeContender(@PathVariable Long rankingId,
                                                               @PathVariable Long contenderId) {

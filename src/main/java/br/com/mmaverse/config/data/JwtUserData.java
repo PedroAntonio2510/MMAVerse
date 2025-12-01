@@ -1,4 +1,4 @@
-package br.com.mmaverse.config;
+package br.com.mmaverse.config.data;
 
 import lombok.Builder;
 

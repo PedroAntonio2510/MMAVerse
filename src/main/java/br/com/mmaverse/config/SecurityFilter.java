@@ -1,5 +1,6 @@
 package br.com.mmaverse.config;
 
+import br.com.mmaverse.config.data.JwtUserData;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

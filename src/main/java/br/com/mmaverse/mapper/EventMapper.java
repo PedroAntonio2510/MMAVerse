@@ -1,6 +1,6 @@
 package br.com.mmaverse.mapper;
 
-import br.com.mmaverse.dto.EventDTO;
+import br.com.mmaverse.controller.dto.EventDTO;
 import br.com.mmaverse.entity.Event;
 import br.com.mmaverse.entity.Organization;
 import br.com.mmaverse.entity.Streaming;

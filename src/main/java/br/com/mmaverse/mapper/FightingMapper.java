@@ -1,7 +1,7 @@
 package br.com.mmaverse.mapper;
 
-import br.com.mmaverse.dto.FightingDTO;
-import br.com.mmaverse.dto.FightingResponseDTO;
+import br.com.mmaverse.controller.dto.FightingDTO;
+import br.com.mmaverse.controller.dto.FightingResponseDTO;
 import br.com.mmaverse.entity.Contender;
 import br.com.mmaverse.entity.Event;
 import br.com.mmaverse.entity.Fighting;

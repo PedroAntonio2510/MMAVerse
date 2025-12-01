@@ -1,7 +1,7 @@
 package br.com.mmaverse.controller;
 
-import br.com.mmaverse.dto.ContenderDTO;
-import br.com.mmaverse.dto.ContenderResponseDTO;
+import br.com.mmaverse.controller.dto.ContenderDTO;
+import br.com.mmaverse.controller.dto.ContenderResponseDTO;
 import br.com.mmaverse.entity.Contender;
 import br.com.mmaverse.mapper.ContenderMapper;
 import br.com.mmaverse.service.ContenderService;

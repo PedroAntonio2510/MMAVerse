@@ -1,11 +1,10 @@
 package br.com.mmaverse.controller;
 
-import br.com.mmaverse.dto.OrganizationDTO;
+import br.com.mmaverse.controller.dto.OrganizationDTO;
 import br.com.mmaverse.entity.Organization;
 import br.com.mmaverse.mapper.OrganizationMapper;
 import br.com.mmaverse.service.OrganizationService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import io.swagger.v3.oas.annotations.tags.Tag;
